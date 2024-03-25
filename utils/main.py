@@ -8,7 +8,7 @@ class Category:
         self.__products = products
 
         Category.total_categories += 1
-        Category.total_unique_products = len(products)
+        Category.total_unique_products += len(products)
 
     def add_product(self, product):
         self.__products.append(product)
