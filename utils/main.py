@@ -24,6 +24,10 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+    @property
+    def get_price(self):
+        return self.price
+
     @classmethod
     def create_product(cls, name, description, price, quantity):
         return cls(name, description, price, quantity)

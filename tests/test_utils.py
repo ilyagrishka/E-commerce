@@ -47,5 +47,5 @@ def test_count_products(create_category, list_products, create_product):
 
 
 def test_count_categories():
-    assert Category.total_categories == 0
-    assert Category.total_unique_products == 0
+    assert Category.total_categories == 2
+    assert Category.total_unique_products == 4
