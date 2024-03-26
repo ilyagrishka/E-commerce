@@ -13,21 +13,32 @@ class Category:
     def add_product(self, product):
         self.__products.append(product)
 
+    @property
     def get_products(self):
-        return self.__products
+        list_products = []
+        for i in self.__products:
+            list_products.append(f"{i.name}, {i.price} руб. Остаток:{i.quantity} шт.")
+        return list_products
 
 
 class Product:
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
+        self._price = price
         self.quantity = quantity
 
     @property
-    def get_price(self):
-        return self.price
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        if value:
+            self._price = value
+        else:
+            print("введите корректное значение")
 
     @classmethod
-    def create_product(cls, name, description, price, quantity):
-        return cls(name, description, price, quantity)
+    def create_product(cls, **kwargs):
+        return cls(**kwargs)
