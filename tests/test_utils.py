@@ -37,6 +37,7 @@ def test_product_initialization(create_product):
     assert create_product._price == 1000.50
     assert create_product.quantity == 10
 
+
 def test_count_categories():
     assert Category.total_categories == 1
     assert Category.total_unique_products == 2
@@ -47,3 +48,17 @@ def test_price(create_product):
     create_product._price = 10
     assert create_product._price == 10
     create_product._price = 0
+
+
+def test_category_len():
+    category = Category("Electronics", "Electronic products", [])
+    product = Product("laptops", "electronic", 2000, 10)
+    assert len(category) == 0
+    category.add_product(product)
+    assert len(category) == 1
+
+
+def test_add_product():
+    product2 = Product("Phone", "Smartphone", 1000.50, 10)
+    product1 = Product("laptops", "electronic", 2000, 10)
+    assert product1 + product2 == 30_005
