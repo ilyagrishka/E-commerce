@@ -1,6 +1,6 @@
 import pytest
 
-from utils.main import Category, Product
+from utils.main import Category, Product, Smartphone
 
 
 @pytest.fixture
@@ -62,3 +62,13 @@ def test_add_product():
     product2 = Product("Phone", "Smartphone", 1000.50, 10)
     product1 = Product("laptops", "electronic", 2000, 10)
     assert product1 + product2 == 30_005
+
+
+@pytest.fixture
+def smartphone():
+    return Smartphone("iphone", "round", 1000, 1, "smart", "x", "cool", "red")
+
+
+def test_failed_to_add_smartphone_and_integer(smartphone):
+    with pytest.raises(TypeError):
+        smartphone + 1

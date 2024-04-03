@@ -49,11 +49,8 @@ class Product:
         return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
 
     def __add__(self, other):
-    # classes = [Category, Product, Smartphone, Grass]
-    # for i in classes:
-    # if issubclass(i.__class__,  # какой класс использовать):
-    # raise ValueError
-    # else:
+        if not isinstance(other, self.__class__):
+            raise TypeError
         return self.price * self.quantity + other.price * other.quantity
 
     @property
@@ -70,24 +67,26 @@ class Product:
     def create_product(cls, **kwargs):
         return cls(**kwargs)
 
-# class Smartphone(Product):
-# ef __init__(self, name, description, price, quantity, efficiency, model, ram, color):
-# super().__init__(name, description, price, quantity)
-# self.efficiency = efficiency
-# self.model = model
-# self.ram = ram
-# self.color = color
+
+class Smartphone(Product):
+    def __init__(self, name, description, price, quantity, efficiency, model, ram, color):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.ram = ram
+        self.color = color
+
 
 # def __str__(self):
 # return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
 
 
-# class Grass(Product):
-# def __init__(self, name, description, price, quantity, made, grow, color):
-# super().__init__(name, description, price, quantity)
-# self.made = made
-# self.grow = grow
-# self.color = color
+class Grass(Product):
+    def __init__(self, name, description, price, quantity, made, grow, color):
+        super().__init__(name, description, price, quantity)
+        self.made = made
+        self.grow = grow
+        self.color = color
 
 # def __str__(self):
 # return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
