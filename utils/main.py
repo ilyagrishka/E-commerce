@@ -11,14 +11,16 @@ class MixinLog:
         return f'{self.__class__.__name__} {a}'
 
 
-class Category:
+class Category(MixinLog):
     total_categories = 0
     total_unique_products = 0
 
     def __init__(self, name, description, products):
+
         self.name = name
         self.description = description
         self.__products = products
+        super().__init__(name, description, products)
 
         Category.total_categories += 1
         Category.total_unique_products += len(products)
@@ -32,7 +34,16 @@ class Category:
     def add_product(self, product):
         if not isinstance(product, Category):
             raise ValueError
+        elif product.quantity < 1:
+            raise ValueError("Товар с нулевым количеством не может быть создан!")
         self.__products.append(product)
+
+    def amount_price(self):
+        try:
+            return sum(self.__products) / sum(self.__products, key=lambda x: x.quantity)
+
+        except ZeroDivisionError:
+            return 0
 
     @property
     def products(self):
@@ -40,6 +51,8 @@ class Category:
         for i in self.__products:
             str_products.append(f"{i.name}, {i.price} руб. Остаток:{i.quantity} шт.")
         return "\n".join(str_products)
+
+
 class Product(ABC):
     def __init__(self, name, description, _price, quantity):
         self.name = name
@@ -76,7 +89,6 @@ class Product(ABC):
 
 class Smartphone(MixinLog, Product):
     def __init__(self, name, description, price, quantity, efficiency, model, ram, color):
-
         self.efficiency = efficiency
         self.model = model
         self.ram = ram
@@ -89,7 +101,6 @@ class Smartphone(MixinLog, Product):
 
 class Grass(MixinLog, Product):
     def __init__(self, name, description, price, quantity, made, grow, color):
-
         self.made = made
         self.grow = grow
         self.color = color
