@@ -1,7 +1,16 @@
 from abc import ABC, abstractmethod
 
 
-class Category:
+class MixinLog:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.name}', '{self.description}', {self.price},{self.quantity})"
+
+
+class Category():
     total_categories = 0
     total_unique_products = 0
 
@@ -32,7 +41,7 @@ class Category:
         return "\n".join(str_products)
 
 
-class Product:
+class Product(ABC):
     def __init__(self, name, description, _price, quantity):
         self.name = name
         self.description = description
@@ -42,7 +51,7 @@ class Product:
     def __len__(self):
         return self.quantity
 
-    # @abstractmethod
+    @abstractmethod
     def __str__(self):
         return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
 
@@ -66,7 +75,7 @@ class Product:
         return cls(**kwargs)
 
 
-class Smartphone(Product):
+class Smartphone(MixinLog, Product):
     def __init__(self, name, description, price, quantity, efficiency, model, ram, color):
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
@@ -74,22 +83,16 @@ class Smartphone(Product):
         self.ram = ram
         self.color = color
 
+    def __str__(self):
+        return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
 
-# def __str__(self):
-# return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
 
-
-class Grass(Product):
+class Grass(MixinLog, Product):
     def __init__(self, name, description, price, quantity, made, grow, color):
         super().__init__(name, description, price, quantity)
         self.made = made
         self.grow = grow
         self.color = color
 
-# def __str__(self):
-# return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
-
-
-# class MixinLog:
-# def __repr__(self):
-# return f"{self.Category}('{self.name}', '{self.description}', {self.__products})"  # какие атрибуты надо написать
+    def __str__(self):
+        return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
