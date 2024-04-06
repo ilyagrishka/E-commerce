@@ -7,10 +7,11 @@ class MixinLog:
         print(self)
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.name}', '{self.description}', {self.price},{self.quantity})"
+        a = str(self.__dict__).replace('{', '').replace('}', '')
+        return f'{self.__class__.__name__} {a}'
 
 
-class Category():
+class Category:
     total_categories = 0
     total_unique_products = 0
 
@@ -39,8 +40,6 @@ class Category():
         for i in self.__products:
             str_products.append(f"{i.name}, {i.price} руб. Остаток:{i.quantity} шт.")
         return "\n".join(str_products)
-
-
 class Product(ABC):
     def __init__(self, name, description, _price, quantity):
         self.name = name
@@ -77,11 +76,12 @@ class Product(ABC):
 
 class Smartphone(MixinLog, Product):
     def __init__(self, name, description, price, quantity, efficiency, model, ram, color):
-        super().__init__(name, description, price, quantity)
+
         self.efficiency = efficiency
         self.model = model
         self.ram = ram
         self.color = color
+        super().__init__(name, description, price, quantity)
 
     def __str__(self):
         return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
@@ -89,10 +89,11 @@ class Smartphone(MixinLog, Product):
 
 class Grass(MixinLog, Product):
     def __init__(self, name, description, price, quantity, made, grow, color):
-        super().__init__(name, description, price, quantity)
+
         self.made = made
         self.grow = grow
         self.color = color
+        super().__init__(name, description, price, quantity)
 
     def __str__(self):
         return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
