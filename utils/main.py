@@ -19,12 +19,10 @@ class Category:
     def __str__(self):
         return f"{self.name},количество продуктов:{len(self)} шт."
 
-    def add_product(self, __product):
-        self.__products.append(__product)
-
-    # def __add__(self, other):
-    # if not isinstance(other, Category):
-    # raise ValueError
+    def add_product(self, product):
+        if not isinstance(product, Category):
+            raise ValueError
+        self.__products.append(product)
 
     @property
     def products(self):
@@ -49,7 +47,7 @@ class Product:
         return f"{self.name},{self.price}руб. Остаток:{self.quantity} шт."
 
     def __add__(self, other):
-        if not isinstance(other, self.__class__):
+        if not type(other) == self.__class__:
             raise TypeError
         return self.price * self.quantity + other.price * other.quantity
 
