@@ -32,7 +32,7 @@ class Category(MixinLog):
         return f"{self.name},количество продуктов:{len(self)} шт."
 
     def add_product(self, product):
-        if not isinstance(product, Category):
+        if not isinstance(product, Product):
             raise ValueError
         elif product.quantity < 1:
             raise ValueError("Товар с нулевым количеством не может быть создан!")
@@ -53,7 +53,13 @@ class Category(MixinLog):
         return "\n".join(str_products)
 
 
-class Product(ABC):
+class AbstractProduct(ABC):
+
+    def __str__(self):
+        pass
+
+
+class Product(AbstractProduct):
     def __init__(self, name, description, _price, quantity):
         self.name = name
         self.description = description
