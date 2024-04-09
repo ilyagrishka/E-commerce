@@ -58,9 +58,14 @@ class AbstractProduct(ABC):
     def __str__(self):
         pass
 
+    @classmethod
+    def create_product(cls, **kwargs):
+        raise NotImplementedError
 
-class Product(AbstractProduct):
-    def __init__(self, name, description, _price, quantity):
+
+class Product(MixinLog, AbstractProduct):
+    def __init__(self, name, description, _price, quantity, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = name
         self.description = description
         self._price = _price
